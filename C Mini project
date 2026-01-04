@@ -1,0 +1,84 @@
+#include <stdio.h>
+
+// Define total vehicle categories
+#define NUM_CATEGORIES 4
+
+// Function Prototypes
+void displayMenu();
+void displayReport(int counts[], int totalVehicles);
+
+int main() {
+    // Step 1: Create a 1D array where each index represents a vehicle type
+    // Step 2: Initialize counters for all vehicle types to 0
+    int vehicleCounts[NUM_CATEGORIES] = {0}; 
+    
+    int inputCode;
+    int totalVehicles = 0;
+    int keepCounting = 1; // Flag to control the main loop
+
+    printf("=== TOLL BOOTH VEHICLE COUNT SYSTEM ===\n");
+
+    // Step 6: Repeat for all vehicle entries
+    while (keepCounting) {
+        
+        // Step 9: Ensure the mapping of vehicle types to array indexes is clear
+        displayMenu();
+        
+        // Step 3: Ask the user to enter vehicle entries one by one
+        printf("Enter Vehicle Type Code (or -1 to Stop and Print Report): ");
+        
+        // Step 4: Read each entry using scanf
+        scanf("%d", &inputCode);
+
+        // Check if user wants to stop
+        if (inputCode == -1) {
+            keepCounting = 0;
+        } 
+        // Validate input range (1 to 4)
+        else if (inputCode >= 1 && inputCode <= NUM_CATEGORIES) {
+            
+            // Step 5: Use the array index corresponding to the vehicle type to increment its counter
+            // We subtract 1 because array indexes start at 0 (e.g., Input 1 maps to Index 0)
+            vehicleCounts[inputCode - 1]++;
+            totalVehicles++;
+            printf(">> Record added for vehicle type %d.\n\n", inputCode);
+            
+        } else {
+            printf(">> Invalid Code! Please try again.\n\n");
+        }
+    }
+
+    // Step 7 & 8: Display the count of each vehicle type and total number
+    displayReport(vehicleCounts, totalVehicles);
+
+    // Step 10: End the program
+    return 0;
+}
+
+// Helper function to show vehicle mappings
+void displayMenu() {
+    printf("------------------------------\n");
+    printf("1. Car\n");
+    printf("2. Bike\n");
+    printf("3. Bus\n");
+    printf("4. Truck\n");
+    printf("------------------------------\n");
+}
+
+// Helper function to generate the final report
+void displayReport(int counts[], int total) {
+    printf("\n\n################################\n");
+    printf("#     FINAL TOLL REPORT        #\n");
+    printf("################################\n");
+    
+    // Mapping index back to vehicle names for clarity
+    const char *vehicleNames[] = {"Car", "Bike", "Bus", "Truck"};
+
+    for (int i = 0; i < NUM_CATEGORIES; i++) {
+        printf("%-10s : %d\n", vehicleNames[i], counts[i]);
+    }
+
+    printf("--------------------------------\n");
+    printf("TOTAL VEHICLES PASSED: %d\n", total);
+    printf("################################\n");
+}
